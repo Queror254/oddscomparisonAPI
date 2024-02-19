@@ -19,18 +19,17 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-
 //Route.get('/', async () => {
 // return { hello: 'world' }
 //})
 
-//Route.get('leagues ', 'SportyTradersController.leagues');
+//Route.get('leagues ', 'OddsController.leagues');
 
-Route.get('/_leagues', 'SportyTradersController.leagues');
+Route.get('/_leagues', 'OddsController.leagues');
 
-Route.get('/_leagues/gameodds', 'SportyTradersController.fetchAndScrapeGameOdds')
+Route.get('/_leagues/gameodds', 'OddsController.fetchAndScrapeGameOdds')
 //.middleware('throttle:global');
 
-Route.get('/_leagues/gameodds/compare_odds', 'SportyTradersController.oddsComparison');
+Route.get('/_leagues/gameodds/compare_odds', 'OddsController.oddsComparison');
 
-Route.get('/gameodds', 'SportyTradersController.odds');
+Route.get('/gameodds', 'OddsController.odds');

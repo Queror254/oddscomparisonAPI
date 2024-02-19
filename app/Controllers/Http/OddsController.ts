@@ -1,4 +1,5 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+// @ts-nocheck
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 const puppeteer = require('puppeteer-extra');
 const { Cluster } = require('puppeteer-cluster');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
@@ -6,22 +7,20 @@ puppeteer.use(StealthPlugin());
 const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker');
 puppeteer.use(AdblockerPlugin({ blockTrackers: true }));
 
-
 //import models
 import League from "App/Models/League";
 import GameOdd from "App/Models/GameOdd";
 import OddsCompare from "App/Models/OddsCompare";
 
+export default class OddsController {
 
-export default class SportyTradersController {
-
-    async odds({ response }) {
+    async odds({ response }: HttpContextContract) {
         const Odds = await GameOdd.all()
         console.log("Retrieving the odds ")
         return response.status(200).json(Odds);
     }
 
-    async leagues({ response }) {
+    async leagues({ response }: HttpContextContract) {
         try {
             // Launch a headless browser
             const browser = await puppeteer.launch();
@@ -88,7 +87,7 @@ export default class SportyTradersController {
 
 
     // scrape the game odds
-    async gameOdds({ response, request }, link) {
+    async gameOdds({ response, request }, link: HttpContextContract) {
 
 
         const scrapedData = [] as any;
@@ -194,7 +193,7 @@ export default class SportyTradersController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    async oddsComparison({ response, request }) {
+    async oddsComparison({ response, request }: HttpContextContract) {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
@@ -355,7 +354,7 @@ export default class SportyTradersController {
     }
     // Define a function to scrape game odds using a cluster
     // Define a function to scrape game odds using a cluster
-    async scrapeGameOddsUsingCluster({ response }) {
+    async scrapeGameOddsUsingCluster({ response }: HttpContextContract) {
         try {
             const scrapedData = [];
 
@@ -387,7 +386,7 @@ export default class SportyTradersController {
         }
     }
 
-    async scrapeGameOddsUsingLoop({ response }) {
+    async scrapeGameOddsUsingLoop({ response }: HttpContextContract) {
         try {
             const scrapedData = [];
 
@@ -417,7 +416,7 @@ export default class SportyTradersController {
 
 
     // Define a function to fetch and scrape game odds
-    async fetchAndScrapeGameOdds({ response }) {
+    async fetchAndScrapeGameOdds({ response }: HttpContextContract) {
         try {
             const scrapedData = await this.scrapeGameOddsUsingLoop({ response });
 
@@ -429,7 +428,5 @@ export default class SportyTradersController {
             return response.status(500).json(error);
         }
     }
-
-
 
 }

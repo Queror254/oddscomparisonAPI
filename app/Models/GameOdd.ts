@@ -1,7 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
-import League from 'App/Models/League';
-
+import League from 'App/Models/League'
 export default class GameOdd extends BaseModel {
   @column({ isPrimary: true })
   public id: number
@@ -20,6 +19,12 @@ export default class GameOdd extends BaseModel {
 
   @column()
   public league_id: number
+
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
 
   @belongsTo(() => League, {
     foreignKey: 'league_id',
