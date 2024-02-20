@@ -7,16 +7,15 @@ const Schema_1 = __importDefault(global[Symbol.for('ioc.use')]("Adonis/Lucid/Sch
 class default_1 extends Schema_1.default {
     constructor() {
         super(...arguments);
-        this.tableName = 'game_odds';
+        this.tableName = 'leagues';
     }
     async up() {
         this.schema.createTable(this.tableName, (table) => {
             table.increments('id');
-            table.integer('league_id').unsigned().references('id').inTable('leagues');
-            table.string('matchday');
-            table.string('match');
-            table.string('matchodds');
-            table.string('oddsvender', 500);
+            table.string('league');
+            table.string('logo');
+            table.string('link');
+            table.boolean('scraped').defaultTo(false);
             table.timestamp('created_at', { useTz: true });
             table.timestamp('updated_at', { useTz: true });
         });
@@ -26,4 +25,4 @@ class default_1 extends Schema_1.default {
     }
 }
 exports.default = default_1;
-//# sourceMappingURL=1708364708647_game_odds.js.map
+//# sourceMappingURL=1708411245239_leagues.js.map
