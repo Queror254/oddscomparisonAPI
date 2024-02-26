@@ -1,6 +1,7 @@
 // @ts-nocheck
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 const puppeteer = require('puppeteer-extra');
+require("dotenv").config();
 const { Cluster } = require('puppeteer-cluster');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
@@ -23,7 +24,17 @@ export default class OddsController {
     async leagues({ response }: HttpContextContract) {
         try {
             // Launch a headless browser
-            const browser = await puppeteer.launch();
+            const browser = await puppeteer.launch({
+                args: [
+                    "--disable-setuid-sandbox",
+                    "--no-sandbox",
+                    "--single-process",
+                ],
+
+                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                    ? process.env.PUPPETEER_EXECUTABLE_PATH
+                    : puppeteer.executablePath(),
+            });
             const page = await browser.newPage();
 
             await page.setViewport({ width: 1366, height: 768 })
@@ -92,7 +103,18 @@ export default class OddsController {
 
         const scrapedData = [] as any;
 
-        const browser = await puppeteer.launch();
+        // Launch a headless browser
+        const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+            ],
+
+            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+        });
 
 
         const links = await League.query().where('scraped', false);
@@ -194,7 +216,18 @@ export default class OddsController {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     async oddsComparison({ response, request }: HttpContextContract) {
-        const browser = await puppeteer.launch();
+        // Launch a headless browser
+        const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+            ],
+
+            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+        });
         const page = await browser.newPage();
 
         // Navigate to the page containing the match data
@@ -281,7 +314,18 @@ export default class OddsController {
 
     static async scrapeGameOddsForLink(link) {
         try {
-            const browser = await puppeteer.launch();
+            // Launch a headless browser
+            const browser = await puppeteer.launch({
+                args: [
+                    "--disable-setuid-sandbox",
+                    "--no-sandbox",
+                    "--single-process",
+                ],
+
+                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                    ? process.env.PUPPETEER_EXECUTABLE_PATH
+                    : puppeteer.executablePath(),
+            });
             const page = await browser.newPage();
 
             const url = link.link;
