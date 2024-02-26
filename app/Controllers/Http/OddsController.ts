@@ -21,6 +21,12 @@ export default class OddsController {
         return response.status(200).json(Odds);
     }
 
+    async compareodds({ response }: HttpContextContract) {
+        const compare_game_odds = await OddsCompare.all()
+        console.log("Comparing odds")
+        return response.status(200).json(compare_game_odds)
+    }
+
     async leagues({ response }: HttpContextContract) {
         try {
             // Launch a headless browser
@@ -31,7 +37,7 @@ export default class OddsController {
                     "--single-process",
                 ],
 
-                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                executablePath: process.env.NODE_ENV === "production"
                     ? process.env.PUPPETEER_EXECUTABLE_PATH
                     : puppeteer.executablePath(),
             });
@@ -111,7 +117,7 @@ export default class OddsController {
                 "--single-process",
             ],
 
-            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+            executablePath: process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer.executablePath(),
         });
@@ -224,7 +230,7 @@ export default class OddsController {
                 "--single-process",
             ],
 
-            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+            executablePath: process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer.executablePath(),
         });
@@ -322,7 +328,7 @@ export default class OddsController {
                     "--single-process",
                 ],
 
-                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                executablePath: process.env.NODE_ENV === "production"
                     ? process.env.PUPPETEER_EXECUTABLE_PATH
                     : puppeteer.executablePath(),
             });

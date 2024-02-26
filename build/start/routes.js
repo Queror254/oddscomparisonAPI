@@ -8,4 +8,5 @@ Route_1.default.get('/_leagues', 'OddsController.leagues');
 Route_1.default.get('/_leagues/gameodds', 'OddsController.fetchAndScrapeGameOdds');
 Route_1.default.get('/_leagues/gameodds/compare_odds', 'OddsController.oddsComparison');
 Route_1.default.get('/gameodds', 'OddsController.odds');
+Route_1.default.get('/compare_gameodds', 'OddsController.compareodds');
 //# sourceMappingURL=routes.js.map

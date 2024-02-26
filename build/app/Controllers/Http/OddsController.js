@@ -19,6 +19,11 @@ class OddsController {
         console.log("Retrieving the odds ");
         return response.status(200).json(Odds);
     }
+    async compareodds({ response }) {
+        const compare_game_odds = await OddsCompare_1.default.all();
+        console.log("Comparing odds");
+        return response.status(200).json(compare_game_odds);
+    }
     async leagues({ response }) {
         try {
             const browser = await puppeteer.launch({
@@ -27,7 +32,7 @@ class OddsController {
                     "--no-sandbox",
                     "--single-process",
                 ],
-                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                executablePath: process.env.NODE_ENV === "production"
                     ? process.env.PUPPETEER_EXECUTABLE_PATH
                     : puppeteer.executablePath(),
             });
@@ -77,7 +82,7 @@ class OddsController {
                 "--no-sandbox",
                 "--single-process",
             ],
-            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+            executablePath: process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer.executablePath(),
         });
@@ -143,7 +148,7 @@ class OddsController {
                 "--no-sandbox",
                 "--single-process",
             ],
-            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+            executablePath: process.env.NODE_ENV === "production"
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer.executablePath(),
         });
@@ -216,7 +221,7 @@ class OddsController {
                     "--no-sandbox",
                     "--single-process",
                 ],
-                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                executablePath: process.env.NODE_ENV === "production"
                     ? process.env.PUPPETEER_EXECUTABLE_PATH
                     : puppeteer.executablePath(),
             });

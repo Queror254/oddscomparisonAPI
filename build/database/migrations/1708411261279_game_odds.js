@@ -16,7 +16,7 @@ class default_1 extends Schema_1.default {
             table.string('matchday');
             table.string('match');
             table.string('matchodds');
-            table.string('oddsvender', 500);
+            table.text('oddsvender');
             table.timestamp('created_at', { useTz: true });
             table.timestamp('updated_at', { useTz: true });
         });

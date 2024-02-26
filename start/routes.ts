@@ -32,4 +32,9 @@ Route.get('/_leagues/gameodds', 'OddsController.fetchAndScrapeGameOdds')
 
 Route.get('/_leagues/gameodds/compare_odds', 'OddsController.oddsComparison');
 
+//retreive gameodds
 Route.get('/gameodds', 'OddsController.odds');
+
+// retrieve comparison data
+Route.get('/compare_gameodds', 'OddsController.compareodds');
+
