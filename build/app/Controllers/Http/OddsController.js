@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const puppeteer = require('puppeteer-extra');
+require("dotenv").config();
 const { Cluster } = require('puppeteer-cluster');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
@@ -20,7 +21,16 @@ class OddsController {
     }
     async leagues({ response }) {
         try {
-            const browser = await puppeteer.launch();
+            const browser = await puppeteer.launch({
+                args: [
+                    "--disable-setuid-sandbox",
+                    "--no-sandbox",
+                    "--single-process",
+                ],
+                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                    ? process.env.PUPPETEER_EXECUTABLE_PATH
+                    : puppeteer.executablePath(),
+            });
             const page = await browser.newPage();
             await page.setViewport({ width: 1366, height: 768 });
             const url = 'https://www.sportytrader.com/en/odds/football/';
@@ -61,7 +71,16 @@ class OddsController {
     }
     async gameOdds({ response, request }, link) {
         const scrapedData = [];
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+            ],
+            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+        });
         const links = await League_1.default.query().where('scraped', false);
         for (const link of links) {
             const page = await browser.newPage();
@@ -118,7 +137,16 @@ class OddsController {
         return response.status(200).json(scrapedData);
     }
     async oddsComparison({ response, request }) {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+            ],
+            executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
+        });
         const page = await browser.newPage();
         await page.goto('https://www.sportytrader.com/en/odds/liverpool-everton-6341495/');
         await page.waitForSelector('.px-box');
@@ -182,7 +210,16 @@ class OddsController {
     }
     static async scrapeGameOddsForLink(link) {
         try {
-            const browser = await puppeteer.launch();
+            const browser = await puppeteer.launch({
+                args: [
+                    "--disable-setuid-sandbox",
+                    "--no-sandbox",
+                    "--single-process",
+                ],
+                executablePath: ProcessingInstruction.env.NODE_ENV === "production"
+                    ? process.env.PUPPETEER_EXECUTABLE_PATH
+                    : puppeteer.executablePath(),
+            });
             const page = await browser.newPage();
             const url = link.link;
             await page.goto(url, { waitUntil: 'domcontentloaded' });
